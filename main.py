@@ -5,7 +5,9 @@ class Node:
         self.next = None
 
 class LRUCache:
+    num_of_ref = 0
     miss = 0
+
     def __init__(self, capacity: int ):
         self.capacity = capacity
         self.front = None
@@ -19,6 +21,7 @@ class LRUCache:
                     temp = temp.next  
             
     def put(self, key : int,value :int):
+        LRUCache.num_of_ref += 1  
         new = Node( key, value)
         if self.front == None:
             self.front = new
@@ -64,6 +67,7 @@ class LRUCache:
         return 
     
     def get(self, key):
+        LRUCache.num_of_ref += 1
         a = self.front
         b = a.next
         
@@ -109,33 +113,74 @@ class LRUCache:
             a = a.next
         print(f"({a.key},{a.value}) <-- REAR")
 
+
+
 cache = LRUCache(50)
-num_of_ref = 0
+# for i in range(50):
+#     cache.put(i, i)
 
-for i in range(50):
-    num_of_ref += 1
-    cache.put(i, i)
+# for i in range(1,101,2):
+#     cache.get(i)
 
-for i in range(1,101,2):
-    num_of_ref += 1
-    cache.get(i)
+# for i in range(101):
+#     count = 0
+#     for j in range(1,i+1):
+#         if i % j == 0:
+#             count += 1
+#     if count == 2:
+#             cache.put(i,i)
 
-for i in range(101):
-    count = 0
-    for j in range(1,i+1):
-        if i % j == 0:
-            count += 1
-    if count == 2:
-            num_of_ref += 1
-            cache.put(i,i)
-
-cache.print_cache()
-print(cache.len_cache())
-miss_rate = (cache.miss/num_of_ref)*100
-print("Miss Rate: ", miss_rate, "%")
-print("Hit Rate: ", 100-miss_rate, "%")
+# # cache.print_cache()
+# print(cache.len_cache())
+# miss_rate = (cache.miss/cache.num_of_ref)
+# print("Miss Rate: ", miss_rate * 100:.2f, "%")
+# print("Hit Rate: ", 100-(miss_rate * 100:.2f), "%")
 
 
+#-------------------------------------------------------------------------------------------
+
+print("                          WELCOME TO LRU CACHE                 \n\n")
+size = int(input("ENTER THE CAPACITY FOR LRUCACHE: "))
+cache = LRUCache(size)
+print()
+
+while True:
+    print("Options:\n")
+    print("  1. Put key Value")
+    print("  2. Get Value")
+    print("  3. Print Cache")
+    print("  4. Miss Rate and Hit Rate")
+    print("  5. Exit\n")
+
+    choice = input("Enter choice:")
+    print()
+
+    if choice == "1":
+        key = int(input("  Enter key: "))
+        value = int(input("  Enter value: "))
+        cache.put(key, value)
+        print("\nVALUE ADDED TO THE CACHE.")
+
+    elif choice == "2":
+        key = int(input(" Enter key to get value: "))
+        value = cache.get(key)
+        if value != -1:
+            print(f"VALUE: {value}")
+        else:
+            print("KEY NOT FOUND")
+
+    elif choice == "3":
+        cache.print_cache()
+
+    elif choice == "4":
+        miss_rate = cache.miss/cache.num_of_ref
+        print(f"Miss Rate: {miss_rate * 100:.2f}%")
+
+    elif choice == "5":
+        break
+
+    else:
+        print("Invalid choice. Please enter a valid option.\n")
 
 
 
