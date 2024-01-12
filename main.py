@@ -39,8 +39,7 @@ class LRUCache:
             self.rear = new
             self.front = self.front.next
             a.next = None
-            self.file_write()
-            LRUCache.num_of_ref -= 1            
+            self.file_write() 
             return
 
         while b is not None and b.key != key:
@@ -65,8 +64,7 @@ class LRUCache:
             a.next = b.next
             self.rear.next = new
             self.rear = new
-            self.file_write()   
-            LRUCache.num_of_ref -= 1
+            self.file_write()  
 
         return 
     
@@ -119,25 +117,24 @@ class LRUCache:
 
 
 cache = LRUCache()
-# for i in range(50):
-#     cache.put(i, i)
+for i in range(50):
+    cache.put(i, i)
 
-# for i in range(1,101,2):
-#     cache.get(i)
+for i in range(1,101,2):
+    cache.get(i)
 
-# for i in range(101):
-#     count = 0
-#     for j in range(1,i+1):
-#         if i % j == 0:
-#             count += 1
-#     if count == 2:
-#             cache.put(i,i)
-
-# cache.print_cache()
-# print(cache.len_cache())
-# miss_rate = (cache.miss / cache.num_of_ref)
-# print("Miss Rate: {:.2f}%".format(miss_rate * 100))
-# print("Hit Rate: {:.2f}%".format(100 - (miss_rate * 100)))
+for i in range(101):
+    count = 0
+    for j in range(1,i+1):
+        if i % j == 0:
+            count += 1
+    if count == 2:
+            cache.put(i,i)
+            
+print(cache.len_cache())
+miss_rate = (cache.miss / cache.num_of_ref)
+print("Miss Rate: {:.2f}%".format(miss_rate * 100))
+print("Hit Rate: {:.2f}%".format(100 - (miss_rate * 100)))
 
 
 
